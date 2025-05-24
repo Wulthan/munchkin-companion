@@ -1,0 +1,27 @@
+{
+  "name": "munchkin",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --force --host",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "pinia": "^3.0.2",
+    "vue": "^3.5.13",
+    "@mdi/js": "^7.4.47"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-basic-ssl": "^2.0.0",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "@vue/eslint-config-airbnb": "^8.0.0",
+    "eslint": "^8.55.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-cypress": "^3.2.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-vue": "^9.26.0",
+    "sass": "^1.77.2",
+    "vite": "^6.3.5"
+  }
+}

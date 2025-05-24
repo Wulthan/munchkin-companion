@@ -1,0 +1,80 @@
+@charset "utf-8";
+
+@forward "variables";
+
+@use "sass:color";
+
+@font-face {
+  font-family: "Windlass";
+  src: local("Windlass"), url('../fonts/windlass/Windlass.ttf') format('truetype');
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Titillium Web";
+  src: url('../fonts/titillium_web/TitilliumWeb-SemiBold.ttf') format('truetype');
+  font-weight: 400;
+  font-display: block;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+html, body, #app {
+  height: 100%;
+  margin: 0;
+  font-family: $font-text;
+  color: $white;
+  font-size: 16px;
+}
+
+#app {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+input, select, textarea, button {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input[type="text"] {
+  background-color: $white;
+  border: 0.3rem solid $secondary;
+  border-radius: $radius-2;
+  color: $secondary;
+  font-size: 1rem;
+  height: 2.5rem;
+  min-height: 2.5rem;
+  width: calc(100% - 2rem - 0.6rem); // 2rem for padding, 0.6rem for border
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    opacity: 0.5;
+    overflow: visible;
+  }
+}
+
+.clickable {
+  cursor: pointer;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: color.adjust($primary, $lightness: -5%);
+    }
+  }
+}
