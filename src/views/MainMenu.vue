@@ -3,6 +3,7 @@
     <div class="content">
       <Button v-if="playerStore.players.length > 0" label="Continue" @click="stateStore.setPhase(phase.setup)"/>
       <Button label="New Game" @click="stateStore.newGame"/>
+      <Button label="Report Issue" @click="reportIssue"/>
     </div>
   </div>
 </template>
@@ -14,6 +15,10 @@ import { usePlayerStore } from '@/stores/player.js'
 
 const stateStore = useStateStore()
 const playerStore = usePlayerStore()
+
+const reportIssue = () => {
+  window.open('https://github.com/Wulthan/munchkin-companion/issues/new', '_blank').focus()
+}
 </script>
 
 <style lang="scss" scoped>

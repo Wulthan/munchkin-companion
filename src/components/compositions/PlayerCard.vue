@@ -12,8 +12,7 @@
         </div>
 
         <div class="stat gender">
-          <mdi-icon :class="{'clickable': !disableControls}"
-                    :icon="player.gender === 'male' ? mdiGenderMale : mdiGenderFemale"
+          <mdi-icon :clickable="!disableControls" :icon="player.gender === 'male' ? mdiGenderMale : mdiGenderFemale"
                     size="2rem" @click="!disableControls && playerStore.swapGender(player.id)"/>
         </div>
 
@@ -22,9 +21,9 @@
             <div class="label">Level</div>
             <div class="value">{{ player.level }}</div>
             <div v-if="!disableControls" class="controls">
-              <mdi-icon :icon="mdiArrowUpDropCircleOutline" class="clickable" size="1.75rem"
+              <mdi-icon :icon="mdiArrowUpDropCircleOutline" clickable size="1.75rem"
                         @click="playerStore.incrementLevel(player.id)"/>
-              <mdi-icon :class="{'clickable': player.level > 1}" :disabled="player.level <= 1"
+              <mdi-icon :clickable="player.level > 1" :disabled="player.level <= 1"
                         :icon="mdiArrowDownDropCircleOutline" size="1.75rem"
                         @click="player.level > 1 && playerStore.decrementLevel(player.id)"/>
             </div>
@@ -34,9 +33,9 @@
             <div class="label">Gear</div>
             <div class="value">{{ player.gear }}</div>
             <div v-if="!disableControls" class="controls">
-              <mdi-icon :icon="mdiArrowUpDropCircleOutline" class="clickable" size="1.75rem"
+              <mdi-icon :icon="mdiArrowUpDropCircleOutline" clickable size="1.75rem"
                         @click="playerStore.incrementGear(player.id)"/>
-              <mdi-icon :icon="mdiArrowDownDropCircleOutline" class="clickable" size="1.75rem"
+              <mdi-icon :icon="mdiArrowDownDropCircleOutline" clickable size="1.75rem"
                         @click="playerStore.decrementGear(player.id)"/>
             </div>
           </div>

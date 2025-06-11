@@ -34,7 +34,8 @@
     </div>
 
     <div v-if="showPlayerSelector" class="player-helper">
-      <mdi-icon :icon="mdiClose" class="clickable remove" size="2rem" @click="showPlayerSelector = false"/>
+      <mdi-icon :icon="mdiClose" class="remove" clickable no-background size="2rem"
+                @click="showPlayerSelector = false"/>
       <div class="scroller">
         <div v-for="(player, id) in battleStore.playersNotInBattle">
           <PlayerCard :player="player" disable-controls @click="addHelper(player.id)"/>

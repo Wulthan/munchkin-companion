@@ -30,16 +30,12 @@ html, body, #app {
   font-size: 16px;
 }
 
-#app {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
+body {
+  touch-action: manipulation; // disable mobile double-tap zoom
+}
 
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none; /* IE 10 and IE 11 */
-  user-select: none; /* Standard syntax */
+a {
+  color: $white;
 }
 
 input, select, textarea, button {
@@ -66,15 +62,5 @@ input[type="text"] {
   &::placeholder {
     opacity: 0.5;
     overflow: visible;
-  }
-}
-
-.clickable {
-  cursor: pointer;
-
-  @media (hover: hover) {
-    &:hover {
-      background-color: color.adjust($primary, $lightness: -5%);
-    }
   }
 }

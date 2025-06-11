@@ -5,5 +5,7 @@ publish:
 	@git add dist/companion.png
 	@git add dist/wall.png
 	@git commit -m "publish gh-pages"
-	@git subtree push --prefix dist origin gh-pages
+	@git subtree split --prefix dist -b gh-pages-deploy
+	@git push origin gh-pages-deploy:gh-pages --force
+	@git branch -D gh-pages-deploy
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="game-container">
+  <div :class="{ 'transitioning': blockInteraction }" class="game-container">
     <div ref="list" class="player-list">
       <PlayerCard ref="previous" :player="playerStore.previousPlayer" class="previous"/>
       <PlayerCard :player="playerStore.currentPlayer"/>
@@ -7,15 +7,15 @@
     </div>
 
     <div class="controls">
-      <Button :icon="mdiArrowLeft" @click="scrollToPrevious"/>
-      <Button :icon="mdiSwordCross" @click="stateStore.setPhase(phase.battle)"/>
-      <Button :icon="mdiArrowRight" @click="scrollToNext"/>
+      <Button :disabled="blockInteraction" :icon="mdiArrowLeft" @click="scrollToPrevious"/>
+      <Button :disabled="blockInteraction" :icon="mdiSwordCross" @click="stateStore.setPhase(phase.battle)"/>
+      <Button :disabled="blockInteraction" :icon="mdiArrowRight" @click="scrollToNext"/>
     </div>
   </div>
 </template>
 
 <script setup>
-import { onBeforeUnmount, onMounted, useTemplateRef } from 'vue'
+import { onBeforeUnmount, onMounted, ref, useTemplateRef } from 'vue'
 import { useBackgroundStore } from '@/stores/background.js'
 import { phase, useStateStore } from '@/stores/state.js'
 import { usePlayerStore } from '@/stores/player.js'
@@ -47,6 +47,8 @@ let isTransitioning = false
 let lastDirection = null
 let isUserHolding = false
 
+let blockInteraction = ref(false)
+
 const onInputStart = () => {
   isUserHolding = true
 }
@@ -56,7 +58,11 @@ const onInputEnd = () => {
 }
 
 const onScroll = () => {
-  if (isTransitioning) return
+  blockInteraction.value = !(isTransitioning && !isUserHolding)
+
+  if (isTransitioning || isUserHolding) {
+    return
+  }
 
   const el = list.value
   const center = (el.scrollWidth - el.clientWidth) / 2
@@ -73,33 +79,31 @@ const onScroll = () => {
   // Debounce final player update
   clearTimeout(scrollTimeout)
   scrollTimeout = setTimeout(() => {
-    detectScrollDirection()
+    triggerPlayerChange(direction, Math.abs(delta) > threshold)
   }, 100)
 }
 
-const detectScrollDirection = () => {
-  const el = list.value
-  const center = (el.scrollWidth - el.clientWidth) / 2
-  const delta = el.scrollLeft - center
-  const threshold = el.clientWidth * 0.5
-
-  if (Math.abs(delta) < threshold) {
+const triggerPlayerChange = (direction, thresholdMet) => {
+  if (!thresholdMet) {
     lastDirection = null
+    blockInteraction.value = false
     return
   }
 
   isTransitioning = true
 
-  const direction = delta > 0 ? 'right' : 'left'
   if (direction === 'left') {
     playerStore.setPreviousPlayer()
   } else {
     playerStore.setNextPlayer()
   }
 
+  blockInteraction.value = false
+
   // Reset scroll position after DOM updates
   requestAnimationFrame(() => {
-    list.value.scrollLeft = center
+    const el = list.value
+    list.value.scrollLeft = (el.scrollWidth - el.clientWidth) / 2
     setTimeout(() => {
       isTransitioning = false
       lastDirection = null
@@ -142,6 +146,10 @@ onBeforeUnmount(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  &.transitioning {
+    pointer-events: none;
+  }
 
   .player-list {
     flex-grow: 1;

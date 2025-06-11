@@ -2,9 +2,9 @@
   <div class="battle-card">
     <div :class="{ 'player': isPlayer }" class="card">
       <mdi-icon v-if="entity.gender" :icon="entity.gender === 'male' ? mdiGenderMale : mdiGenderFemale"
-                class="clickable gender" size="2rem" @click="swapGender"/>
+                class="gender" clickable size="2rem" @click="swapGender"/>
 
-      <mdi-icon v-if="removable" :icon="mdiClose" class="clickable remove" size="2rem" @click="remove"/>
+      <mdi-icon v-if="removable" :icon="mdiClose" class="remove" clickable size="2rem" @click="remove"/>
 
       <div class="name">{{ entity.name }}</div>
 
@@ -13,10 +13,9 @@
           <div class="label">Level</div>
           <div class="value">{{ entity.level }}</div>
           <div class="controls">
-            <mdi-icon :icon="mdiArrowUpDropCircleOutline" class="clickable" size="1.75rem" @click="incrementLevel"/>
-            <mdi-icon :class="{'clickable': entity.level > 1}" :disabled="entity.level <= 1"
-                      :icon="mdiArrowDownDropCircleOutline" size="1.75rem"
-                      @click="entity.level > 1 && decrementLevel()"/>
+            <mdi-icon :icon="mdiArrowUpDropCircleOutline" clickable size="1.75rem" @click="incrementLevel"/>
+            <mdi-icon :clickable="entity.level > 1" :disabled="entity.level <= 1" :icon="mdiArrowDownDropCircleOutline"
+                      size="1.75rem" @click="entity.level > 1 && decrementLevel()"/>
           </div>
         </div>
 
@@ -24,8 +23,8 @@
           <div class="label">Gear</div>
           <div class="value">{{ entity.gear }}</div>
           <div class="controls">
-            <mdi-icon :icon="mdiArrowUpDropCircleOutline" class="clickable" size="1.75rem" @click="incrementGear"/>
-            <mdi-icon :icon="mdiArrowDownDropCircleOutline" class="clickable" size="1.75rem" @click="decrementGear"/>
+            <mdi-icon :icon="mdiArrowUpDropCircleOutline" clickable size="1.75rem" @click="incrementGear"/>
+            <mdi-icon :icon="mdiArrowDownDropCircleOutline" clickable size="1.75rem" @click="decrementGear"/>
           </div>
         </div>
 
@@ -33,9 +32,8 @@
           <div class="label">Modifier</div>
           <div class="value">{{ entity.modifier }}</div>
           <div class="controls">
-            <mdi-icon :icon="mdiArrowUpDropCircleOutline" class="clickable" size="1.75rem" @click="incrementModifier"/>
-            <mdi-icon :icon="mdiArrowDownDropCircleOutline" class="clickable" size="1.75rem"
-                      @click="decrementModifier"/>
+            <mdi-icon :icon="mdiArrowUpDropCircleOutline" clickable size="1.75rem" @click="incrementModifier"/>
+            <mdi-icon :icon="mdiArrowDownDropCircleOutline" clickable size="1.75rem" @click="decrementModifier"/>
           </div>
         </div>
       </div>

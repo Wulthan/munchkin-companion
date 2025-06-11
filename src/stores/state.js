@@ -17,6 +17,7 @@ export const useStateStore = defineStore('state', () => {
   const playerStore = usePlayerStore()
   const battleStore = useBattleStore()
 
+  const version = 'v0.0.1'
   const gamePhase = ref(phase.menu)
 
   const isMenu = computed(() => gamePhase.value === phase.menu)
@@ -58,6 +59,6 @@ export const useStateStore = defineStore('state', () => {
     }
   }
 
-  return { gamePhase, isMenu, isSetup, isRunning, isBattle, newGame, setPhase, back }
+  return { version, gamePhase, isMenu, isSetup, isRunning, isBattle, newGame, setPhase, back }
 })
 
