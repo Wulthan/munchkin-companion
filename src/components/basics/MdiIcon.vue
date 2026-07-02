@@ -1,6 +1,7 @@
 <template>
-  <svg :class="{'disabled': disabled, 'clickable': clickable, 'no-background': noBackground}" :height="size"
-       :width="size" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <svg :class="{'hidden': hidden, 'disabled': disabled, 'clickable': clickable, 'no-background': noBackground}"
+       :height="size" :width="size" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"
+       xmlns="http://www.w3.org/2000/svg">
     <path :d="icon"/>
   </svg>
 </template>
@@ -23,12 +24,23 @@ defineProps({
   },
   disabled: {
     type: Boolean
+  },
+  hidden: {
+    type: Boolean
   }
 })
 </script>
 
 <style lang="scss" scoped>
 @use "sass:color";
+
+svg {
+  transition: opacity 0.2s ease;
+}
+
+.hidden {
+  opacity: 0;
+}
 
 .disabled {
   fill: color.adjust($black, $alpha: -0.7);

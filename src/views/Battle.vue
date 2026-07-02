@@ -38,7 +38,7 @@
                 @click="showPlayerSelector = false"/>
       <div class="scroller">
         <div v-for="(player, id) in battleStore.playersNotInBattle">
-          <PlayerCard :player="player" disable-controls @click="addHelper(player.id)"/>
+          <PlayerCard :player="player" hide-controls @click="addHelper(player.id)"/>
         </div>
       </div>
     </div>

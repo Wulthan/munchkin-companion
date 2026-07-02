@@ -12,31 +12,32 @@
         </div>
 
         <div class="stat gender">
-          <mdi-icon :clickable="!disableControls" :icon="player.gender === 'male' ? mdiGenderMale : mdiGenderFemale"
-                    size="2rem" @click="!disableControls && playerStore.swapGender(player.id)"/>
+          <mdi-icon :clickable="!hideControls && !disableControls"
+                    :icon="player.gender === 'male' ? mdiGenderMale : mdiGenderFemale"
+                    size="2rem" @click="!hideControls && !disableControls && playerStore.swapGender(player.id)"/>
         </div>
 
         <div class="subdetails">
           <div class="stat level">
             <div class="label">Level</div>
             <div class="value">{{ player.level }}</div>
-            <div v-if="!disableControls" class="controls">
-              <mdi-icon :icon="mdiArrowUpDropCircleOutline" clickable size="1.75rem"
-                        @click="playerStore.incrementLevel(player.id)"/>
-              <mdi-icon :clickable="player.level > 1" :disabled="player.level <= 1"
-                        :icon="mdiArrowDownDropCircleOutline" size="1.75rem"
-                        @click="player.level > 1 && playerStore.decrementLevel(player.id)"/>
+            <div class="controls">
+              <mdi-icon :clickable="player.level > 1" :disabled="player.level <= 1" :hidden="hideControls"
+                        :icon="mdiMinusCircleOutline" size="1.75rem"
+                        @click="!hideControls && player.level > 1 && playerStore.decrementLevel(player.id)"/>
+              <mdi-icon :clickable="!hideControls" :hidden="hideControls" :icon="mdiPlusCircleOutline" size="1.75rem"
+                        @click="!hideControls && playerStore.incrementLevel(player.id)"/>
             </div>
           </div>
 
           <div class="stat gear">
             <div class="label">Gear</div>
             <div class="value">{{ player.gear }}</div>
-            <div v-if="!disableControls" class="controls">
-              <mdi-icon :icon="mdiArrowUpDropCircleOutline" clickable size="1.75rem"
-                        @click="playerStore.incrementGear(player.id)"/>
-              <mdi-icon :icon="mdiArrowDownDropCircleOutline" clickable size="1.75rem"
-                        @click="playerStore.decrementGear(player.id)"/>
+            <div class="controls">
+              <mdi-icon :clickable="!hideControls" :hidden="hideControls" :icon="mdiMinusCircleOutline" size="1.75rem"
+                        @click="!hideControls && playerStore.decrementGear(player.id)"/>
+              <mdi-icon :clickable="!hideControls" :hidden="hideControls" :icon="mdiPlusCircleOutline" size="1.75rem"
+                        @click="!hideControls && playerStore.incrementGear(player.id)"/>
             </div>
           </div>
         </div>
@@ -46,7 +47,7 @@
 </template>
 
 <script setup>
-import { mdiArrowDownDropCircleOutline, mdiArrowUpDropCircleOutline, mdiGenderFemale, mdiGenderMale } from '@mdi/js'
+import { mdiGenderFemale, mdiGenderMale, mdiMinusCircleOutline, mdiPlusCircleOutline } from '@mdi/js'
 import { usePlayerStore } from '@/stores/player.js'
 import MdiIcon from '@/components/basics/MdiIcon.vue'
 
@@ -54,18 +55,16 @@ const playerStore = usePlayerStore()
 
 defineProps({
   player: Object,
-  disableControls: Boolean
+  disableControls: Boolean,
+  hideControls: Boolean,
 })
 </script>
 
 <style lang="scss" scoped>
 .player-card {
-  width: 100%;
-  height: 100%;
-  flex-shrink: 0;
-  scroll-snap-align: center;
-  scroll-snap-stop: always;
-  scroll-behavior: smooth;
+  width: fit-content;
+  height: fit-content;
+  will-change: transform, filter;
 
   display: flex;
   flex-direction: column;

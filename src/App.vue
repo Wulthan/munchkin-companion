@@ -1,6 +1,6 @@
 <template>
   <div class="munchkin-app">
-    <div :style="backgroundStore.backgroundStyle" class="background"/>
+    <div :class="{ dragging: backgroundStore.dragging }" :style="backgroundStore.backgroundStyle" class="background"/>
 
     <div class="meta">
       {{ stateStore.version }}
@@ -65,8 +65,12 @@ const stateStore = useStateStore()
     background-image: url(/wall.png);
     width: 100%;
     height: 100%;
-    transition: background-position 0.5s ease;
+    transition: background-position 0.25s ease-out;
     filter: brightness(50%);
+    
+    &.dragging {
+      transition: none;
+    }
   }
 
   .meta {
